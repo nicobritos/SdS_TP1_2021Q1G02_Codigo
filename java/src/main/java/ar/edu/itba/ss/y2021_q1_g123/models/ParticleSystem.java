@@ -2,7 +2,7 @@ package ar.edu.itba.ss.y2021_q1_g123.models;
 
 import java.util.*;
 
-public class ParticleSystem {
+public class ParticleSystem implements Iterable<Particle> {
     private final int length;
     private final Queue<Particle> particles;
     private int timeZero;
@@ -44,6 +44,11 @@ public class ParticleSystem {
         ParticleSystem.calculateNeighbors(matrix);
 
         return matrix;
+    }
+
+    @Override
+    public Iterator<Particle> iterator() {
+        return this.particles.iterator();
     }
 
     private void populateMatrix(Collection<Particle>[][] matrix) {

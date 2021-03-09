@@ -23,7 +23,7 @@ public abstract class ParticleParser {
             double radius = scanner.nextDouble();
             double property = scanner.nextDouble();
 
-            particleSystem.enqueueParticle(new Particle(radius, property));
+            particleSystem.enqueueParticle(new Particle(i, radius, property));
         }
 
         return particleSystem;

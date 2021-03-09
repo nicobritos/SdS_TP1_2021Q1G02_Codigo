@@ -3,16 +3,22 @@ package ar.edu.itba.ss.y2021_q1_g123.models;
 import java.util.*;
 
 public class Particle {
+    private final int id;
     private final double radius;
     private final double property;
     private final Set<Particle> neighbors;
     private Position position;
     private Velocity velocity;
 
-    public Particle(double radius, double property) {
+    public Particle(int id, double radius, double property) {
+        this.id = id;
         this.radius = radius;
         this.property = property;
         this.neighbors = new HashSet<>();
+    }
+
+    public int getId() {
+        return this.id;
     }
 
     public double getRadius() {
@@ -48,11 +54,11 @@ public class Particle {
         if (this == o) return true;
         if (!(o instanceof Particle)) return false;
         Particle particle = (Particle) o;
-        return Double.compare(particle.getRadius(), this.getRadius()) == 0 && Double.compare(particle.getProperty(), this.getProperty()) == 0 && Objects.equals(this.getPosition(), particle.getPosition());
+        return this.getId() == particle.getId();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.getRadius(), this.getProperty(), this.getPosition());
+        return Objects.hash(this.getId());
     }
 }
