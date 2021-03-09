@@ -63,6 +63,14 @@ public final class CommandParser {
         return this.parseVelocity;
     }
 
+    public int getMatrixSize() {
+        return this.matrixSize;
+    }
+
+    public double getRadius() {
+        return this.radius;
+    }
+
     private void assertParsed() throws IllegalStateException {
         if (!this.parsed)
             throw new IllegalStateException();
