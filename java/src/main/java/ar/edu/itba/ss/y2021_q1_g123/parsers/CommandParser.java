@@ -11,6 +11,8 @@ public final class CommandParser {
     public static final String STATIC_FILE_PATH_ARG_NAME = "staticPath";
     public static final String DYNAMIC_FILE_PATH_ARG_NAME = "dynamicPath";
     public static final String PARSE_VELOCITY_ARG_NAME = "withVelocity";
+    public static final String MATRIX_SIZE_ARG_NAME = "M";
+    public static final String RADIUS_ARG_NAME = "r";
 
     private static CommandParser instance;
 
@@ -18,6 +20,8 @@ public final class CommandParser {
     private String staticPath;
     private String dynamicPath;
     private boolean parseVelocity;
+    private int matrixSize;
+    private double radius;
 
     private CommandParser() {
         this.parsed = false;
@@ -29,6 +33,18 @@ public final class CommandParser {
         this.staticPath = properties.getProperty(STATIC_FILE_PATH_ARG_NAME);
         this.dynamicPath = properties.getProperty(DYNAMIC_FILE_PATH_ARG_NAME);
         this.parseVelocity = properties.containsKey(PARSE_VELOCITY_ARG_NAME);
+
+        try {
+            this.matrixSize = Integer.parseInt(properties.getProperty(MATRIX_SIZE_ARG_NAME));
+        } catch (NumberFormatException e) {
+            throw new ParseException("Matrix size is not a valid number");
+        }
+
+        try {
+            this.radius = Double.parseDouble(properties.getProperty(RADIUS_ARG_NAME));
+        } catch (NumberFormatException e) {
+            throw new ParseException("Radius is not a valid number");
+        }
 
         this.parsed = true;
     }
@@ -71,6 +87,21 @@ public final class CommandParser {
         dynamicFilepathOption.setArgName(DYNAMIC_FILE_PATH_ARG_NAME);
         dynamicFilepathOption.setRequired(true);
 
-        return CommandUtils.parseCommandLine(args, parseVelocityOption, staticFilepathOption, dynamicFilepathOption);
+        Option matrixSizeOption = new Option(JAVA_OPT, "specifies the matrix size");
+        matrixSizeOption.setArgName(MATRIX_SIZE_ARG_NAME);
+        matrixSizeOption.setRequired(true);
+
+        Option radiusOption = new Option(JAVA_OPT, "specifies the neighbor radius");
+        radiusOption.setArgName(RADIUS_ARG_NAME);
+        radiusOption.setRequired(true);
+
+        return CommandUtils.parseCommandLine(
+                args,
+                parseVelocityOption,
+                staticFilepathOption,
+                dynamicFilepathOption,
+                radiusOption,
+                matrixSizeOption
+        );
     }
 }
