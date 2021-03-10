@@ -16,4 +16,8 @@ public class Velocity {
     public double getySpeed() {
         return this.ySpeed;
     }
+
+    public Velocity copy() {
+        return new Velocity(this.xSpeed, this.ySpeed);
+    }
 }

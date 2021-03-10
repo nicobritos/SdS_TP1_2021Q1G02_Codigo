@@ -49,6 +49,17 @@ public class Particle {
         return this.neighbors;
     }
 
+    public Particle copy() {
+        Particle particle = new Particle(this.id, this.radius, this.property);
+
+        if (this.position != null)
+            particle.setPosition(this.position.copy());
+        if (this.position != null)
+            particle.setVelocity(this.velocity.copy());
+
+        return particle;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -58,7 +58,7 @@ public class ParticleSystem implements Iterable<Particle> {
             int xCell = (int) Math.floor(particle.getPosition().getX() / cellSize);
             int yCell = (int) Math.floor(particle.getPosition().getY() / cellSize);
 
-            matrix[xCell][yCell].add(particle);
+            matrix[xCell][yCell].add(particle.copy());
         }
     }
 
