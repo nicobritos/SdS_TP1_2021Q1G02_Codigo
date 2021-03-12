@@ -26,7 +26,5 @@ public class CellIndexMethod {
         long endTime = System.currentTimeMillis();
 
         ParticleSystemSerializer.serialize(endTime - startTime, test.getLeft(), CommandParser.getInstance().getOutputPath());
-
-        System.out.println("TEST");
     }
 }
