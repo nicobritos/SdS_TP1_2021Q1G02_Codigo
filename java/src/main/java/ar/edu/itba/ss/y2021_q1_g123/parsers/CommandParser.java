@@ -10,7 +10,7 @@ import static ar.edu.itba.ss.y2021_q1_g123.parsers.CommandUtils.JAVA_OPT;
 public final class CommandParser {
     public static final String STATIC_FILE_PATH_ARG_NAME = "staticPath";
     public static final String DYNAMIC_FILE_PATH_ARG_NAME = "dynamicPath";
-    public static final String PARSE_VELOCITY_ARG_NAME = "withVelocity";
+    public static final String PARSE_VELOCITY_ARG_NAME = "parseVelocity";
     public static final String OUTPUT_FILE_PATH_ARG_NAME = "outputPath";
     public static final String MATRIX_SIZE_ARG_NAME = "M";
     public static final String RADIUS_ARG_NAME = "r";
