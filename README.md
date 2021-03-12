@@ -21,7 +21,7 @@ mvn package
 ##### Optional
 
 * `-DparseVelocity`: If present the program will try to parse the 
-  velocity fieds in the dynamic file
+  velocity fields in the dynamic file
 
 * `-Dperiodic`: If present the neighbors and distance will be calculated 
   using a periodic function. Otherwise, they
