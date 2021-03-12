@@ -36,14 +36,14 @@ public class ParticleSystem implements Iterable<Particle> {
         return this.particles.poll();
     }
 
-    public Collection<Particle>[][] createMatrix(int size, boolean periodic, double radius) {
+    public Pair<Collection<Particle>, Collection<Particle>[][]> cellIndexMethod(int size, boolean periodic, double radius) {
         Collection<Particle>[][] matrix = (Collection<Particle>[][]) new Collection[size][size];
 
         ParticleSystem.initializeMatrix(matrix);
-        this.populateMatrix(matrix);
+        Collection<Particle> particles = this.populateMatrix(matrix);
         ParticleSystem.calculateNeighbors(matrix, periodic, this.length, radius);
 
-        return matrix;
+        return new Pair<>(particles, matrix);
     }
 
     @Override
@@ -51,15 +51,18 @@ public class ParticleSystem implements Iterable<Particle> {
         return this.particles.iterator();
     }
 
-    private void populateMatrix(Collection<Particle>[][] matrix) {
+    private Collection<Particle> populateMatrix(Collection<Particle>[][] matrix) {
         double cellSize = this.length / (double) matrix.length;
 
+        Collection<Particle> particles = new ArrayList<>(this.particles.size());
         for (Particle particle : this.particles) {
             int xCell = (int) Math.floor(particle.getPosition().getX() / cellSize);
             int yCell = (int) Math.floor(particle.getPosition().getY() / cellSize);
 
             matrix[xCell][yCell].add(particle);
+            particles.add(particle);
         }
+        return particles;
     }
 
     private static void initializeMatrix(Collection<Particle>[][] matrix) {
