@@ -1,6 +1,5 @@
 package ar.edu.itba.ss.y2021_q1_g123.models;
 
-import java.awt.Point;
 import java.util.*;
 
 public class Particle {
@@ -77,8 +76,12 @@ public class Particle {
     }
 
     public double distanceTo(Particle other) {
-        double ctr_dist = Point.distance(this.position.getX(), this.position.getY(), other.position.getX(), other.position.getY());
-        return ctr_dist == 0 ? 0 : ctr_dist - this.getRadius() - other.getRadius();
+        double ctr_dist =
+                Math.sqrt(
+                        Math.pow(Math.abs(this.position.getX() - other.position.getX()), 2) +
+                        Math.pow(Math.abs(this.position.getY() - other.position.getY()), 2)
+                );
 
+        return ctr_dist - this.getRadius() - other.getRadius();
     }
 }

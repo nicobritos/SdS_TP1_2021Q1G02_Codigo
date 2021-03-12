@@ -17,7 +17,11 @@ public class CellIndexMethod {
         ParticleParser.parseDynamic(CommandParser.getInstance().getDynamicPath(), system, CommandParser.getInstance().getParseVelocity());
 
         long startTime = System.currentTimeMillis();
-        Collection<Particle>[][] test = system.createMatrix(CommandParser.getInstance().getMatrixSize());
+        Collection<Particle>[][] test = system.createMatrix(
+                CommandParser.getInstance().getMatrixSize(),
+                CommandParser.getInstance().getPeriodic(),
+                CommandParser.getInstance().getRadius()
+        );
         long endTime = System.currentTimeMillis();
 
         ParticleSystemSerializer.serialize(endTime - startTime, system, CommandParser.getInstance().getOutputPath());
