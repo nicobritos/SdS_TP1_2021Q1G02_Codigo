@@ -24,7 +24,7 @@ public final class CommandParser {
     private String outputPath;
     private boolean parseVelocity;
     private boolean periodic;
-    private int matrixSize;
+    private Integer matrixSize;
     private double radius;
 
     private CommandParser() {
@@ -40,10 +40,12 @@ public final class CommandParser {
         this.parseVelocity = properties.containsKey(PARSE_VELOCITY_ARG_NAME);
         this.periodic = properties.containsKey(PERIODIC_ARG_NAME);
 
-        try {
-            this.matrixSize = Integer.parseInt(properties.getProperty(MATRIX_SIZE_ARG_NAME));
-        } catch (NumberFormatException e) {
-            throw new ParseException("Matrix size is not a valid number");
+        if (properties.containsKey(MATRIX_SIZE_ARG_NAME)) {
+            try {
+                this.matrixSize = Integer.parseInt(properties.getProperty(MATRIX_SIZE_ARG_NAME));
+            } catch (NumberFormatException e) {
+                throw new ParseException("Matrix size is not a valid number");
+            }
         }
 
         try {
@@ -74,7 +76,7 @@ public final class CommandParser {
         return this.parseVelocity;
     }
 
-    public int getMatrixSize() {
+    public Integer getMatrixSize() {
         return this.matrixSize;
     }
 
@@ -120,7 +122,7 @@ public final class CommandParser {
 
         Option matrixSizeOption = new Option(JAVA_OPT, "specifies the matrix size");
         matrixSizeOption.setArgName(MATRIX_SIZE_ARG_NAME);
-        matrixSizeOption.setRequired(true);
+        matrixSizeOption.setRequired(false);
 
         Option radiusOption = new Option(JAVA_OPT, "specifies the neighbor radius");
         radiusOption.setArgName(RADIUS_ARG_NAME);

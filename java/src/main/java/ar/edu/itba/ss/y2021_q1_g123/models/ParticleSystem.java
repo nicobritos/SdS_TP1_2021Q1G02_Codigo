@@ -1,11 +1,15 @@
 package ar.edu.itba.ss.y2021_q1_g123.models;
 
+import ar.edu.itba.ss.y2021_q1_g123.CellIndexMethod;
+import ar.edu.itba.ss.y2021_q1_g123.parsers.CommandParser;
+
 import java.util.*;
 
 public class ParticleSystem implements Iterable<Particle> {
     private final int length;
     private final Queue<Particle> particles;
     private int timeZero;
+    private double maxRadius;
 
     public ParticleSystem(int length, int totalParticles) {
         this.length = length;
@@ -30,13 +34,49 @@ public class ParticleSystem implements Iterable<Particle> {
 
     public void enqueueParticle(Particle particle) {
         this.particles.add(particle);
+        if (particle.getRadius() > this.maxRadius)
+            this.maxRadius = particle.getRadius();
     }
 
     public Particle dequeueParticle() {
         return this.particles.poll();
     }
 
+    public double getMaxRadius() {
+        return this.maxRadius;
+    }
+
+    public Pair<Collection<Particle>, Collection<Particle>[][]> cellIndexMethod(boolean periodic, double radius) {
+        return this.internalCellIndexMethod(this.calculateMatrixSize(radius), periodic, radius);
+    }
+
     public Pair<Collection<Particle>, Collection<Particle>[][]> cellIndexMethod(int size, boolean periodic, double radius) {
+        this.assertValidMatrixSize(size, radius);
+        return this.internalCellIndexMethod(size, periodic, radius);
+    }
+
+    @Override
+    public Iterator<Particle> iterator() {
+        return this.particles.iterator();
+    }
+
+    private int calculateMatrixSize(double radius) {
+        // L/M > rc + r
+        // => L / (rc + r) < M
+        // => M >= Math.ceil(L / (rc + r) + eps)
+        return (int) Math.ceil((this.length / (radius + this.maxRadius)) + Double.MIN_NORMAL);
+    }
+
+    private void assertValidMatrixSize(int size, double radius) {
+        // L/M > rc + r
+        // => L / (rc + r) < M
+        // => M > Math.ceil(L / (rc + r))
+        if (size < Math.ceil(this.length / (radius + this.maxRadius))) {
+            throw new InvalidMatrixSize();
+        }
+    }
+
+    private Pair<Collection<Particle>, Collection<Particle>[][]> internalCellIndexMethod(int size, boolean periodic, double radius) {
         Collection<Particle>[][] matrix = (Collection<Particle>[][]) new Collection[size][size];
 
         ParticleSystem.initializeMatrix(matrix);
@@ -44,11 +84,6 @@ public class ParticleSystem implements Iterable<Particle> {
         ParticleSystem.calculateNeighbors(matrix, periodic, this.length, radius);
 
         return new Pair<>(particles, matrix);
-    }
-
-    @Override
-    public Iterator<Particle> iterator() {
-        return this.particles.iterator();
     }
 
     private Collection<Particle> populateMatrix(Collection<Particle>[][] matrix) {

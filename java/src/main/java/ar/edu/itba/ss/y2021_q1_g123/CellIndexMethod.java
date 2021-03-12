@@ -17,14 +17,24 @@ public class CellIndexMethod {
         ParticleSystem system = ParticleParser.parseStatic(CommandParser.getInstance().getStaticPath());
         ParticleParser.parseDynamic(CommandParser.getInstance().getDynamicPath(), system, CommandParser.getInstance().getParseVelocity());
 
-        long startTime = System.currentTimeMillis();
-        Pair<Collection<Particle>, Collection<Particle>[][]> test = system.cellIndexMethod(
-                CommandParser.getInstance().getMatrixSize(),
-                CommandParser.getInstance().getPeriodic(),
-                CommandParser.getInstance().getRadius()
-        );
+        long startTime;
+        Pair<Collection<Particle>, Collection<Particle>[][]> result;
+        if (CommandParser.getInstance().getMatrixSize() == null) {
+            startTime = System.currentTimeMillis();
+            result = system.cellIndexMethod(
+                    CommandParser.getInstance().getPeriodic(),
+                    CommandParser.getInstance().getRadius()
+            );
+        } else {
+            startTime = System.currentTimeMillis();
+            result = system.cellIndexMethod(
+                    CommandParser.getInstance().getMatrixSize(),
+                    CommandParser.getInstance().getPeriodic(),
+                    CommandParser.getInstance().getRadius()
+            );
+        }
         long endTime = System.currentTimeMillis();
 
-        ParticleSystemSerializer.serialize(endTime - startTime, test.getLeft(), CommandParser.getInstance().getOutputPath());
+        ParticleSystemSerializer.serialize(endTime - startTime, result.getLeft(), CommandParser.getInstance().getOutputPath());
     }
 }
