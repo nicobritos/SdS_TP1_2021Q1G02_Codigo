@@ -23,7 +23,7 @@ public abstract class ParticleParser {
             double radius = scanner.nextDouble();
             double property = scanner.nextDouble();
 
-            particleSystem.enqueueParticle(new Particle(i, radius, property));
+            particleSystem.addParticle(new Particle(i, radius, property));
         }
 
         return particleSystem;
@@ -36,8 +36,7 @@ public abstract class ParticleParser {
         particleSystem.setTimeZero(scanner.nextInt());
 
         for (int i = 0; i < particleSystem.getTotalParticles(); i++) {
-            // Return first (previously added) particle
-            Particle particle = particleSystem.dequeueParticle();
+            Particle particle = particleSystem.getParticle(i);
 
             double x = scanner.nextDouble();
             double y = scanner.nextDouble();
@@ -48,11 +47,6 @@ public abstract class ParticleParser {
                 double ySpeed = scanner.nextDouble();
                 particle.setVelocity(new Velocity(xSpeed, ySpeed));
             }
-
-            // Put the removed particle to the bottom of the queue
-            // As a side note, please note that after the whole loop
-            // ends it will reset the initial particle order
-            particleSystem.enqueueParticle(particle);
         }
     }
 }

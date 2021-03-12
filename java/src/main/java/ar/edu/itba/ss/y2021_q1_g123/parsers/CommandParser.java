@@ -15,6 +15,7 @@ public final class CommandParser {
     public static final String MATRIX_SIZE_ARG_NAME = "M";
     public static final String RADIUS_ARG_NAME = "r";
     public static final String PERIODIC_ARG_NAME = "periodic";
+    public static final String BRUTEFORCE_ARG_NAME = "bruteforce";
 
     private static CommandParser instance;
 
@@ -24,6 +25,7 @@ public final class CommandParser {
     private String outputPath;
     private boolean parseVelocity;
     private boolean periodic;
+    private boolean bruteforce;
     private Integer matrixSize;
     private double radius;
 
@@ -39,6 +41,7 @@ public final class CommandParser {
         this.outputPath = properties.getProperty(OUTPUT_FILE_PATH_ARG_NAME);
         this.parseVelocity = properties.containsKey(PARSE_VELOCITY_ARG_NAME);
         this.periodic = properties.containsKey(PERIODIC_ARG_NAME);
+        this.bruteforce = properties.containsKey(BRUTEFORCE_ARG_NAME);
 
         if (properties.containsKey(MATRIX_SIZE_ARG_NAME)) {
             try {
@@ -92,6 +95,10 @@ public final class CommandParser {
         return this.periodic;
     }
 
+    public boolean getBruteforce() {
+        return this.bruteforce;
+    }
+
     private void assertParsed() throws IllegalStateException {
         if (!this.parsed)
             throw new IllegalStateException();
@@ -111,6 +118,10 @@ public final class CommandParser {
         Option parsePeriodicOption = new Option(JAVA_OPT, "if present indicates that it should calculate the distance between particles using a periodic function");
         parsePeriodicOption.setArgName(PERIODIC_ARG_NAME);
         parsePeriodicOption.setRequired(false);
+
+        Option parseBruteforceOption = new Option(JAVA_OPT, "if present it finds the neighbors of a particle by bruteforce (checks every other particle). If not, it finds them using the Cell Index Method");
+        parseBruteforceOption.setArgName(BRUTEFORCE_ARG_NAME);
+        parseBruteforceOption.setRequired(false);
 
         Option staticFilepathOption = new Option(JAVA_OPT, "specifies the static file's file path");
         staticFilepathOption.setArgName(STATIC_FILE_PATH_ARG_NAME);
@@ -136,6 +147,7 @@ public final class CommandParser {
                 args,
                 parseVelocityOption,
                 parsePeriodicOption,
+                parseBruteforceOption,
                 staticFilepathOption,
                 dynamicFilepathOption,
                 radiusOption,
