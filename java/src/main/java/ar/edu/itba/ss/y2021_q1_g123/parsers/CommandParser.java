@@ -14,6 +14,7 @@ public final class CommandParser {
     public static final String OUTPUT_FILE_PATH_ARG_NAME = "outputPath";
     public static final String MATRIX_SIZE_ARG_NAME = "M";
     public static final String RADIUS_ARG_NAME = "r";
+    public static final String PERIODIC_ARG_NAME = "periodic";
 
     private static CommandParser instance;
 
@@ -22,6 +23,7 @@ public final class CommandParser {
     private String dynamicPath;
     private String outputPath;
     private boolean parseVelocity;
+    private boolean periodic;
     private int matrixSize;
     private double radius;
 
@@ -36,6 +38,7 @@ public final class CommandParser {
         this.dynamicPath = properties.getProperty(DYNAMIC_FILE_PATH_ARG_NAME);
         this.outputPath = properties.getProperty(OUTPUT_FILE_PATH_ARG_NAME);
         this.parseVelocity = properties.containsKey(PARSE_VELOCITY_ARG_NAME);
+        this.periodic = properties.containsKey(PERIODIC_ARG_NAME);
 
         try {
             this.matrixSize = Integer.parseInt(properties.getProperty(MATRIX_SIZE_ARG_NAME));
@@ -83,6 +86,10 @@ public final class CommandParser {
         return this.outputPath;
     }
 
+    public boolean getPeriodic() {
+        return this.periodic;
+    }
+
     private void assertParsed() throws IllegalStateException {
         if (!this.parsed)
             throw new IllegalStateException();
@@ -98,6 +105,10 @@ public final class CommandParser {
         Option parseVelocityOption = new Option(JAVA_OPT, "if present indicates that it should parse the velocity inside the dynamic file");
         parseVelocityOption.setArgName(PARSE_VELOCITY_ARG_NAME);
         parseVelocityOption.setRequired(false);
+
+        Option parsePeriodicOption = new Option(JAVA_OPT, "if present indicates that it should calculate the distance between particles using a periodic function");
+        parsePeriodicOption.setArgName(PERIODIC_ARG_NAME);
+        parsePeriodicOption.setRequired(false);
 
         Option staticFilepathOption = new Option(JAVA_OPT, "specifies the static file's file path");
         staticFilepathOption.setArgName(STATIC_FILE_PATH_ARG_NAME);
@@ -122,6 +133,7 @@ public final class CommandParser {
         return CommandUtils.parseCommandLine(
                 args,
                 parseVelocityOption,
+                parsePeriodicOption,
                 staticFilepathOption,
                 dynamicFilepathOption,
                 radiusOption,

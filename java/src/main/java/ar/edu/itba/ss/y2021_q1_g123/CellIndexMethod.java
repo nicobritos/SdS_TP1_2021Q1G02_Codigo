@@ -1,5 +1,6 @@
 package ar.edu.itba.ss.y2021_q1_g123;
 
+import ar.edu.itba.ss.y2021_q1_g123.models.Pair;
 import ar.edu.itba.ss.y2021_q1_g123.models.Particle;
 import ar.edu.itba.ss.y2021_q1_g123.models.ParticleSystem;
 import ar.edu.itba.ss.y2021_q1_g123.parsers.CommandParser;
@@ -17,10 +18,14 @@ public class CellIndexMethod {
         ParticleParser.parseDynamic(CommandParser.getInstance().getDynamicPath(), system, CommandParser.getInstance().getParseVelocity());
 
         long startTime = System.currentTimeMillis();
-        Collection<Particle>[][] test = system.createMatrix(CommandParser.getInstance().getMatrixSize());
+        Pair<Collection<Particle>, Collection<Particle>[][]> test = system.cellIndexMethod(
+                CommandParser.getInstance().getMatrixSize(),
+                CommandParser.getInstance().getPeriodic(),
+                CommandParser.getInstance().getRadius()
+        );
         long endTime = System.currentTimeMillis();
 
-        ParticleSystemSerializer.serialize(endTime - startTime, system, CommandParser.getInstance().getOutputPath());
+        ParticleSystemSerializer.serialize(endTime - startTime, test.getLeft(), CommandParser.getInstance().getOutputPath());
 
         System.out.println("TEST");
     }

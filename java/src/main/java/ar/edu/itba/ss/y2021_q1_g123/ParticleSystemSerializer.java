@@ -1,12 +1,12 @@
 package ar.edu.itba.ss.y2021_q1_g123;
 
 import ar.edu.itba.ss.y2021_q1_g123.models.Particle;
-import ar.edu.itba.ss.y2021_q1_g123.models.ParticleSystem;
 
 import java.io.*;
+import java.util.Collection;
 
 public abstract class ParticleSystemSerializer {
-    public static void serialize(long elapsedTimeMs, ParticleSystem system, String outputPath) throws IOException {
+    public static void serialize(long elapsedTimeMs, Collection<Particle> particles, String outputPath) throws IOException {
         // Outputs as TSV:
         // executionTime in ms
         // particle1 [ \t neighbor1 \t neighbor2... neighborN ]
@@ -17,7 +17,7 @@ public abstract class ParticleSystemSerializer {
         writer.append(String.valueOf(elapsedTimeMs));
         writer.append('\n');
 
-        for (Particle particle : system) {
+        for (Particle particle : particles) {
              ParticleSystemSerializer.writeLine(writer, particle);
         }
 
