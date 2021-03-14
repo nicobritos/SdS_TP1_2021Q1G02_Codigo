@@ -66,7 +66,8 @@ public class ParticleSystem implements Iterable<Particle> {
         return this.internalCellIndexMethod(this.calculateMatrixSize(radius), periodic, radius);
     }
 
-    public Pair<Collection<Particle>, Collection<Particle>[][]> cellIndexMethod(int size, boolean periodic, double radius) {
+    public Pair<Collection<Particle>, Collection<Particle>[][]> cellIndexMethod(int size, boolean periodic,
+                                                                                double radius) {
         this.assertValidMatrixSize(size, radius);
         return this.internalCellIndexMethod(size, periodic, radius);
     }
@@ -87,12 +88,13 @@ public class ParticleSystem implements Iterable<Particle> {
         // L/M > rc + r
         // => L / (rc + r) < M
         // => M > Math.ceil(L / (rc + r))
-        if (size < Math.ceil(this.length / (radius + this.maxRadius))) {
+        if (size > Math.ceil(this.length / (radius + this.maxRadius))) {
             throw new InvalidMatrixSize();
         }
     }
 
-    private Pair<Collection<Particle>, Collection<Particle>[][]> internalCellIndexMethod(int size, boolean periodic, double radius) {
+    private Pair<Collection<Particle>, Collection<Particle>[][]> internalCellIndexMethod(int size, boolean periodic,
+                                                                                         double radius) {
         Collection<Particle>[][] matrix = (Collection<Particle>[][]) new Collection[size][size];
 
         ParticleSystem.initializeMatrix(matrix);
@@ -128,8 +130,7 @@ public class ParticleSystem implements Iterable<Particle> {
             Collection<Particle>[][] matrix,
             boolean isPeriodic,
             int length,
-            double radius)
-    {
+            double radius) {
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix.length; j++) {
                 Collection<Collection<Particle>> neighbors = ParticleSystem.getNeighbors(matrix, i, j, isPeriodic);
@@ -142,8 +143,7 @@ public class ParticleSystem implements Iterable<Particle> {
             Collection<Particle>[][] matrix,
             final int i,
             final int j,
-            boolean isPeriodic)
-    {
+            boolean isPeriodic) {
         Collection<Collection<Particle>> neighbors = new LinkedList<>();
 
         if (isPeriodic) {
@@ -157,10 +157,9 @@ public class ParticleSystem implements Iterable<Particle> {
             L.POSITIONS.forEach(position -> {
                 if (
                         (i + position.getX() >= 0)
-                        && (i + position.getX() < matrix.length)
-                        && (j + position.getY() >= 0)
-                        && (j + position.getY() < matrix.length))
-                {
+                                && (i + position.getX() < matrix.length)
+                                && (j + position.getY() >= 0)
+                                && (j + position.getY() < matrix.length)) {
                     neighbors.add(matrix[i + (int) position.getX()][j + (int) position.getY()]);
                 }
             });
@@ -174,8 +173,7 @@ public class ParticleSystem implements Iterable<Particle> {
             Collection<Collection<Particle>> neighborsList,
             boolean isPeriodic,
             int length,
-            double radius)
-    {
+            double radius) {
         for (Particle particle : particles) {
             for (Collection<Particle> neighbors : neighborsList) {
                 neighbors.forEach(neighbor -> {
@@ -193,8 +191,7 @@ public class ParticleSystem implements Iterable<Particle> {
             Particle neighbor,
             boolean isPeriodic,
             int length,
-            double radius)
-    {
+            double radius) {
         double distance = isPeriodic ? particle.periodicDistanceTo(neighbor, length) : particle.distanceTo(neighbor);
         return !(distance > radius);
     }

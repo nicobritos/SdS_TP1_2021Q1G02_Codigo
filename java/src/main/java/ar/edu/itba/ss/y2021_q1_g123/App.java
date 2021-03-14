@@ -15,7 +15,8 @@ public class App {
         CommandParser.getInstance().parse(args);
 
         ParticleSystem system = ParticleParser.parseStatic(CommandParser.getInstance().getStaticPath());
-        ParticleParser.parseDynamic(CommandParser.getInstance().getDynamicPath(), system, CommandParser.getInstance().getParseVelocity());
+        ParticleParser.parseDynamic(CommandParser.getInstance().getDynamicPath(), system,
+                CommandParser.getInstance().getParseVelocity());
 
         Pair<Long, Collection<Particle>> result;
         if (CommandParser.getInstance().getBruteforce()) {
@@ -24,7 +25,8 @@ public class App {
             result = App.computeNeighborsCellIndexMethod(system);
         }
 
-        ParticleSystemSerializer.serialize(result.getLeft(), result.getRight(), CommandParser.getInstance().getOutputPath());
+        ParticleSystemSerializer.serialize(result.getLeft(), result.getRight(),
+                CommandParser.getInstance().getOutputPath());
     }
 
     private static Pair<Long, Collection<Particle>> computeNeighborsCellIndexMethod(ParticleSystem system) {

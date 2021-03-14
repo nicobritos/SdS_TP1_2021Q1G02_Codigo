@@ -18,7 +18,7 @@ public abstract class ParticleSystemSerializer {
         writer.append('\n');
 
         for (Particle particle : particles) {
-             ParticleSystemSerializer.writeLine(writer, particle);
+            ParticleSystemSerializer.writeLine(writer, particle);
         }
 
         writer.append('\n');

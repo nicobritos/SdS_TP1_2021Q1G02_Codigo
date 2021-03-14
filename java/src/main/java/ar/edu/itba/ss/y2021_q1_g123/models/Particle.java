@@ -80,9 +80,9 @@ public class Particle {
     public double periodicDistanceTo(Particle other, double l) {
         double dx = Math.abs(this.position.getX() - other.position.getX());
         double dy = Math.abs(this.position.getY() - other.position.getY());
-        dx = (dx > l/2) ? l - dx : dx;
-        dy = (dy > l/2) ? l - dy : dy;
-        double ctr_dist = Math.sqrt(Math.pow(dx,2) + Math.pow(dy,2));
+        dx = (dx > l / 2) ? l - dx : dx;
+        dy = (dy > l / 2) ? l - dy : dy;
+        double ctr_dist = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
         return ctr_dist == 0 ? 0 : ctr_dist - this.getRadius() - other.getRadius();
     }
 
@@ -90,7 +90,7 @@ public class Particle {
         double ctr_dist =
                 Math.sqrt(
                         Math.pow(Math.abs(this.position.getX() - other.position.getX()), 2) +
-                        Math.pow(Math.abs(this.position.getY() - other.position.getY()), 2)
+                                Math.pow(Math.abs(this.position.getY() - other.position.getY()), 2)
                 );
 
         return ctr_dist - this.getRadius() - other.getRadius();

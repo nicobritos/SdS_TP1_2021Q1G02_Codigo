@@ -111,15 +111,18 @@ public final class CommandParser {
     }
 
     private static Properties parseArgs(String[] args) throws ParseException {
-        Option parseVelocityOption = new Option(JAVA_OPT, "if present indicates that it should parse the velocity inside the dynamic file");
+        Option parseVelocityOption = new Option(JAVA_OPT, "if present indicates that it should parse the velocity " +
+                "inside the dynamic file");
         parseVelocityOption.setArgName(PARSE_VELOCITY_ARG_NAME);
         parseVelocityOption.setRequired(false);
 
-        Option parsePeriodicOption = new Option(JAVA_OPT, "if present indicates that it should calculate the distance between particles using a periodic function");
+        Option parsePeriodicOption = new Option(JAVA_OPT, "if present indicates that it should calculate the distance" +
+                " between particles using a periodic function");
         parsePeriodicOption.setArgName(PERIODIC_ARG_NAME);
         parsePeriodicOption.setRequired(false);
 
-        Option parseBruteforceOption = new Option(JAVA_OPT, "if present it finds the neighbors of a particle by bruteforce (checks every other particle). If not, it finds them using the Cell Index Method");
+        Option parseBruteforceOption = new Option(JAVA_OPT, "if present it finds the neighbors of a particle by " +
+                "bruteforce (checks every other particle). If not, it finds them using the Cell Index Method");
         parseBruteforceOption.setArgName(BRUTEFORCE_ARG_NAME);
         parseBruteforceOption.setRequired(false);
 
