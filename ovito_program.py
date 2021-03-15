@@ -2,7 +2,7 @@ import os
 import sys
 
 
-
+# Recibe la linea donde se encuentra el valor del radio junto con la propiedad y devuelve el radio
 def getRadius(particle_radius):
     j = 0
     while particle_radius[j].isdigit() == False:
@@ -10,6 +10,8 @@ def getRadius(particle_radius):
     particle_radius = particle_radius.split(' ')
     return particle_radius[j]
 
+# recibe el id de la particula de la cual queremos calcular los vecinos y el output file (file de los vecinos)
+# retorna un array de las particulas que son vecinas
 def getVecinos(id_particle, file):
     vecinos = open(file, "r")
     line = vecinos.readline()
@@ -81,7 +83,7 @@ vecinos = getVecinos(id_particle, vecinos_file)
 print("vecinos")
 print(vecinos)
 
-particle_id=1
+particle_id=0
 for line in static:
     ovito.write(str(particle_id))
     ovito.write('\t')
