@@ -68,9 +68,9 @@ ovito = open(ovito_file, "a")
 N = static.readline()
 
 # Delete spaces if there are any
-N.replace(' ', '')
+N = N.replace(' ', '')
 ovito.write(N)
-ovito.write('\n\n')
+ovito.write('\n')
 
 #we dont need L
 static.readline()
