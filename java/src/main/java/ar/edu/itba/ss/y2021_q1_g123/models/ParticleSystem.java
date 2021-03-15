@@ -177,7 +177,7 @@ public class ParticleSystem implements Iterable<Particle> {
         for (Particle particle : particles) {
             for (Collection<Particle> neighbors : neighborsList) {
                 neighbors.forEach(neighbor -> {
-                    if (isNeighborInsideRadius(particle, neighbor, isPeriodic, length, radius)) {
+                    if (particle.getId() != neighbor.getId() && isNeighborInsideRadius(particle, neighbor, isPeriodic, length, radius)) {
                         particle.getNeighbors().add(neighbor);
                         neighbor.getNeighbors().add(particle);
                     }

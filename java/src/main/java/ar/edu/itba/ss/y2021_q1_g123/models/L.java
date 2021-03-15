@@ -9,5 +9,5 @@ public class L {
     static Position NORTH_EAST = new Position(-1, 1);
     static Position EAST = new Position(0, 1);
     static Position SOUTH_EAST = new Position(1, 1);
-    static List<Position> POSITIONS = Arrays.asList(NORTH, NORTH_EAST, EAST, SOUTH_EAST);
+    static List<Position> POSITIONS = Arrays.asList(NORTH, NORTH_EAST, EAST, SOUTH_EAST,NEUTRAL);
 }
