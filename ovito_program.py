@@ -10,11 +10,33 @@ def getRadius(particle_radius):
     particle_radius = particle_radius.split(' ')
     return particle_radius[j]
 
+def getVecinos(id_particle, file):
+    vecinos = open(file, "r")
+    line = vecinos.readline()
+    out = True
+    while out:
+        line = vecinos.readline()
+        line = line.split('\t')
+        if line[0] == str(id_particle):
+            out = False
+    ret = [id_particle]
+    for segment in line:
+        segment = segment.replace('\n','')
+        string =  str(id_particle)
+        if segment.isdigit() and segment != string:
+            ret.append(int(segment))
+    return ret
+    
+
+
+
+
+
 
 # Get the total number of args passed
 total = len(sys.argv)
-if total != 4:
-    print("three arguments needed, static file, dinamic file and id of particle")
+if total != 5:
+    print("four arguments needed, 1.static file, 2.dynamic file 3.vecinos file 4.id of particle")
     quit()
 
 
@@ -28,7 +50,9 @@ while os.path.exists(ovito_file):
 
 static_file = str(sys.argv[1])
 dynamic_file = str(sys.argv[2])
-current_particle = str(sys.argv[3])
+vecinos_file = str(sys.argv[3])
+id_particle = int(sys.argv[4])
+
 
 #open the files
 static = open(static_file, "r")
@@ -52,6 +76,11 @@ ovito.write('\n\n')
 static.readline()
 dynamic.readline()
 
+
+vecinos = getVecinos(id_particle, vecinos_file)
+print("vecinos")
+print(vecinos)
+
 particle_id=1
 for line in static:
     ovito.write(str(particle_id))
@@ -59,10 +88,14 @@ for line in static:
     particle_radius = line.replace('\n', '')
     particle_radius = getRadius(particle_radius)
     ovito.write(particle_radius)
-    ovito.write(dynamic.readline())
-    
+    ovito.write(dynamic.readline().replace('\n',''))
+    if particle_id in vecinos:
+        ovito.write('\t' + "0" + '\t' +  "250" + '\n')
+    else:
+        ovito.write('\t' + "250" + '\t' +  "0" + '\n')
     particle_id += 1
   
 ovito.close()
 static.close()
+
 
