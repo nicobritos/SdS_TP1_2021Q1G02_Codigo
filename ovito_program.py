@@ -19,6 +19,7 @@ def getVecinos(id_particle, file):
     while out:
         line = vecinos.readline()
         line = line.split('\t')
+        line[0] = line[0].replace('\n', '')
         if line[0] == str(id_particle):
             out = False
     ret = [id_particle]
