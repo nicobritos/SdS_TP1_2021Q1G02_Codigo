@@ -49,6 +49,9 @@ public final class CommandParser {
             } catch (NumberFormatException e) {
                 throw new ParseException("Matrix size is not a valid number");
             }
+
+            if (this.matrixSize <= 0)
+                throw new ParseException("Matrix size is not a positive integer");
         }
 
         try {
@@ -57,8 +60,6 @@ public final class CommandParser {
             throw new ParseException("Radius is not a valid number");
         }
 
-        if (this.matrixSize <= 0)
-            throw new ParseException("Matrix size is not a positive integer");
         if (this.radius <= 0)
             throw new ParseException("Radius is not a positive number");
 
