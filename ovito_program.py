@@ -7,7 +7,7 @@ def getRadius(particle_radius):
     j = 0
     while particle_radius[j].isdigit() == False:
         j += 1
-    particle_radius = particle_radius.split(' ')
+    particle_radius = particle_radius.split('\t')
     return particle_radius[j]
 
 # recibe el id de la particula de la cual queremos calcular los vecinos y el output file (file de los vecinos)
@@ -91,6 +91,7 @@ for line in static:
     particle_radius = line.replace('\n', '')
     particle_radius = getRadius(particle_radius)
     ovito.write(particle_radius)
+    ovito.write('\t')
     ovito.write(dynamic.readline().replace('\n',''))
     if particle_id in vecinos:
         ovito.write('\t' + "0" + '\t' +  "250" + '\n')
